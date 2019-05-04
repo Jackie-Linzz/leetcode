@@ -1,3 +1,5 @@
+// Runtime: 12 ms, faster than 88.33% of C++ online submissions for Two Sum.
+// Memory Usage: 10.8 MB, less than 6.33% of C++ online submissions for Two Sum.
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
