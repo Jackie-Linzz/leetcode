@@ -55,75 +55,62 @@ Node* buildTree() {
     Node * n1 = new Node(1, n2, n3);
     return n1;
 }
-
 void preOrder(Node * root) {
-    stack<Node *> s;
     if(root == nullptr) return;
-    //s.push(root);
-    Node * t = root;
-    while(t || !s.empty()) {
-        while(t != nullptr) {
-            cout << " " << t->getData();
-            s.push(t);
-            t = t->getLeft();
-        }
-        if(!s.empty()) {
-            t = s.top();
-            s.pop();
-            t = t->getRight();
-        }
-        
+    stack<Node *> s;
+    Node * head = root;
+    s.push(head);
+    while(!s.empty()) {
+        head = s.top();
+        s.pop();
+        cout << head->getData() << " ";
+        Node * right = head->getRight();
+        if (right) s.push(right);
+        Node * left = head->getLeft();
+        if (left) s.push(left); 
     }
     cout << endl;
-    return;
+    return; 
 }
 
 void inOrder(Node * root) {
-    stack<Node *> s;
     if(root == nullptr) return;
-    //s.push(root);
-    Node * t = root;
-    while(t || !s.empty()) {
-        while(t != nullptr) {
-            s.push(t);
-            t = t->getLeft();
-        }
-        if(!s.empty()) {
-            t = s.top();
-            cout << " " << t->getData();
+    stack<Node *> s;
+    Node * head = root;
+    
+    while(head != nullptr || !s.empty()) {
+        if(head != nullptr) {
+            s.push(head);
+            head = head->getLeft();
+        } else {
+            head = s.top();
             s.pop();
-            t = t->getRight();
+            cout << head->getData() << " ";
+            head = head->getRight();
         }
-        
     }
     cout << endl;
     return;
 }
 
 void postOrder(Node * root) {
-    stack<Node*> s;
     if(root == nullptr) return;
-    Node * t = root;
-    Node * p = nullptr;
-    while(t) {
-        s.push(t);
-        t = t->getLeft();
+    stack<Node *> s1, s2;
+    Node * head = root;
+    s1.push(head);
+    while(!s1.empty()) {
+        head = s1.top();
+        s1.pop();
+        s2.push(head);
+        Node * left = head->getLeft();
+        Node * right = head->getRight();
+        if(left) s1.push(left);
+        if(right) s1.push(right);
     }
-    while(!s.empty()) {
-        t = s.top();
-        s.pop();
-        if(t->getRight() == p || t->getRight() == nullptr) {
-            cout << " " << t->getData();
-            p = t;
-        } else {
-            s.push(t);
-            t = t->getRight();
-            while(t) {
-                s.push(t);
-                t = t->getLeft();
-            }
-        }
-        
+    while(!s2.empty()) {
+        head = s2.top();
+        s2.pop();
+        cout << head->getData() << " ";
     }
     cout << endl;
     return;
